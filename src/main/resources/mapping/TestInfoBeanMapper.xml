@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.navis.ora.mapper.TestInfoBeanMapper">
+  <resultMap id="BaseResultMap" type="org.navis.ora.bean.TestInfoBean">
+    <id column="SERIALKEY" jdbcType="DECIMAL" property="serialkey" />
+    <result column="TESTKEY" jdbcType="VARCHAR" property="testkey" />
+    <result column="TESTVALUE" jdbcType="VARCHAR" property="testvalue" />
+    <result column="COMMENTS" jdbcType="VARCHAR" property="comments" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    SERIALKEY, TESTKEY, TESTVALUE, COMMENTS
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.math.BigDecimal" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from TESTINFO
+    where SERIALKEY = #{serialkey,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.math.BigDecimal">
+    delete from TESTINFO
+    where SERIALKEY = #{serialkey,jdbcType=DECIMAL}
+  </delete>
+  <insert id="insert" parameterType="org.navis.ora.bean.TestInfoBean">
+    insert into TESTINFO (SERIALKEY, TESTKEY, TESTVALUE, 
+      COMMENTS)
+    values (#{serialkey,jdbcType=DECIMAL}, #{testkey,jdbcType=VARCHAR}, #{testvalue,jdbcType=VARCHAR}, 
+      #{comments,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.navis.ora.bean.TestInfoBean">
+    insert into TESTINFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="serialkey != null">
+        SERIALKEY,
+      </if>
+      <if test="testkey != null">
+        TESTKEY,
+      </if>
+      <if test="testvalue != null">
+        TESTVALUE,
+      </if>
+      <if test="comments != null">
+        COMMENTS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="serialkey != null">
+        #{serialkey,jdbcType=DECIMAL},
+      </if>
+      <if test="testkey != null">
+        #{testkey,jdbcType=VARCHAR},
+      </if>
+      <if test="testvalue != null">
+        #{testvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null">
+        #{comments,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.navis.ora.bean.TestInfoBean">
+    update TESTINFO
+    <set>
+      <if test="testkey != null">
+        TESTKEY = #{testkey,jdbcType=VARCHAR},
+      </if>
+      <if test="testvalue != null">
+        TESTVALUE = #{testvalue,jdbcType=VARCHAR},
+      </if>
+      <if test="comments != null">
+        COMMENTS = #{comments,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where SERIALKEY = #{serialkey,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.navis.ora.bean.TestInfoBean">
+    update TESTINFO
+    set TESTKEY = #{testkey,jdbcType=VARCHAR},
+      TESTVALUE = #{testvalue,jdbcType=VARCHAR},
+      COMMENTS = #{comments,jdbcType=VARCHAR}
+    where SERIALKEY = #{serialkey,jdbcType=DECIMAL}
+  </update>
+</mapper>
